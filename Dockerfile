@@ -35,9 +35,8 @@ RUN install -d $ANDROID_HOME
       # then running a series of SDK manager commands to install necessary android SDK packages that'll allow the app to build
 RUN wget --output-document=$ANDROID_HOME/cmdline-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_TOOLS}_latest.zip
       # move to the archive at ANDROID_HOME
-RUN pushd $ANDROID_HOME
-RUN unzip -d cmdline-tools cmdline-tools.zip
-RUN popd
+RUN cd $ANDROID_HOME && unzip -d cmdline-tools cmdline-tools.zip 
+
 ENV PATH=$PATH:${ANDROID_HOME}/cmdline-tools/tools/bin/
 
       # Nothing fancy here, just checking sdkManager version
@@ -54,9 +53,20 @@ RUN export ANDROID_SDK_ROOT="$ANDROID_HOME"
 RUN sudo apt install zip unzip -y
 
 RUN curl -s "https://get.sdkman.io" | bash
-RUN source "$HOME/.sdkman/bin/sdkman-init.sh"
-RUN sdk version
-RUN sdk install gradle 6.8.3
+RUN /bin/bash -c "source /root/.sdkman/bin/sdkman-init.sh; sdk version; sdk install gradle 6.8.3"
+
+
+# RUN cat /root/.sdkman/bin/sdkman-init.sh
+
+ENV SDKMAN_DIR="$HOME/.sdkman"
+
+ENV PATH=/root/.sdkman/bin:$PATH
+# ENV PATH=/root/.sdkman/candidates/java/current/bin:$PATH
+# ENV PATH=/root/.sdkman/candidates/scala/current/bin:$PATH
+# ENV PATH=/root/.sdkman/candidates/sbt/current/bin:$PATH
+
+# RUN sdk version
+# RUN sdk install gradle 6.8.3
 RUN sudo apt install tree -y
 
 RUN sudo apt install python -y
@@ -64,5 +74,5 @@ RUN sudo apt install jq -y
 
 ENV CLOUDSDK_INSTALL_DIR=/home/ubuntu/programs/gcloud
 RUN curl -sSL https://sdk.cloud.google.com | bash
-RUN if [ -f '/home/ubuntu/programs/gcloud/google-cloud-sdk/path.bash.inc' ]; then . '/home/ubuntu/programs/gcloud/google-cloud-sdk/path.bash.inc'; fi
-RUN if [ -f '/home/ubuntu/programs/gcloud/google-cloud-sdk/completion.bash.inc' ]; then . '/home/ubuntu/programs/gcloud/google-cloud-sdk/completion.bash.inc'; fi
+RUN /bin/bash -c "if [ -f '/home/ubuntu/programs/gcloud/google-cloud-sdk/path.bash.inc' ]; then . '/home/ubuntu/programs/gcloud/google-cloud-sdk/path.bash.inc'; fi"
+RUN /bin/bash -c "if [ -f '/home/ubuntu/programs/gcloud/google-cloud-sdk/completion.bash.inc' ]; then . '/home/ubuntu/programs/gcloud/google-cloud-sdk/completion.bash.inc'; fi"
