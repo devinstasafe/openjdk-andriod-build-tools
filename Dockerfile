@@ -48,7 +48,7 @@ RUN sdkmanager --sdk_root=${ANDROID_HOME} "platforms;android-${ANDROID_COMPILE_S
 RUN sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools"
 RUN sdkmanager --sdk_root=${ANDROID_HOME} "build-tools;${ANDROID_BUILD_TOOLS}"
 
-RUN export ANDROID_SDK_ROOT="$ANDROID_HOME"
+ENV ANDROID_SDK_ROOT="$ANDROID_HOME"
 
 RUN sudo apt install zip unzip -y
 
@@ -62,7 +62,7 @@ ENV SDKMAN_DIR="$HOME/.sdkman"
 
 ENV PATH=/root/.sdkman/bin:$PATH
 # ENV PATH=/root/.sdkman/candidates/java/current/bin:$PATH
-# ENV PATH=/root/.sdkman/candidates/scala/current/bin:$PATH
+ENV PATH=/root/.sdkman/candidates/gradle/current/bin:$PATH
 # ENV PATH=/root/.sdkman/candidates/sbt/current/bin:$PATH
 
 # RUN sdk version
@@ -76,3 +76,5 @@ ENV CLOUDSDK_INSTALL_DIR=/home/ubuntu/programs/gcloud
 RUN curl -sSL https://sdk.cloud.google.com | bash
 RUN /bin/bash -c "if [ -f '/home/ubuntu/programs/gcloud/google-cloud-sdk/path.bash.inc' ]; then . '/home/ubuntu/programs/gcloud/google-cloud-sdk/path.bash.inc'; fi"
 RUN /bin/bash -c "if [ -f '/home/ubuntu/programs/gcloud/google-cloud-sdk/completion.bash.inc' ]; then . '/home/ubuntu/programs/gcloud/google-cloud-sdk/completion.bash.inc'; fi"
+
+ENV PATH=/home/ubuntu/programs/gcloud/google-cloud-sdk/bin:$PATH
