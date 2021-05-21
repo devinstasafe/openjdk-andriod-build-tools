@@ -7,14 +7,14 @@ ENV ANDROID_COMPILE_SDK="28"
 
 # ANDROID_BUILD_TOOLS is the version of the Android build tools you are using.
 # It should match buildToolsVersion.
-ENV ANDROID_BUILD_TOOLS="27.0.3"
+ENV ANDROID_BUILD_TOOLS="29.0.2"
 
 # It's what version of the command line tools we're going to download from the official site.
 # Official Site-> https://developer.android.com/studio/index.html
 # There, look down below at the cli tools only, sdk tools package is of format:
 #        commandlinetools-os_type-ANDROID_SDK_TOOLS_latest.zip
 # when the script was last modified for latest compileSdkVersion, it was which is written down below
-ENV ANDROID_SDK_TOOLS="6514223"
+ENV ANDROID_SDK_TOOLS="7302050"
 
 
 RUN apt --quiet update --yes
@@ -24,6 +24,7 @@ RUN apt-get update -yqq
 RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 RUN apt-get install -y nodejs
 RUN npm -v
+# RUN apt-get install tree -y
 
       # Setup path as android_home for moving/exporting the downloaded sdk into it
 ENV ANDROID_HOME="${PWD}/android-home"
@@ -37,7 +38,11 @@ RUN wget --output-document=$ANDROID_HOME/cmdline-tools.zip https://dl.google.com
       # move to the archive at ANDROID_HOME
 RUN cd $ANDROID_HOME && unzip -d cmdline-tools cmdline-tools.zip 
 
+# RUN cd $ANDROID_HOME && tree 
+
 ENV PATH=$PATH:${ANDROID_HOME}/cmdline-tools/tools/bin/
+
+ENV PATH=$PATH:${ANDROID_HOME}/cmdline-tools/cmdline-tools/bin/
 
       # Nothing fancy here, just checking sdkManager version
 RUN sdkmanager --version
