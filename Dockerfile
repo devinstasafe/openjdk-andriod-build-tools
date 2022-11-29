@@ -3,18 +3,18 @@ FROM openjdk:8-jdk
 
 # ANDROID_COMPILE_SDK is the version of Android you're compiling with.
 # It should match compileSdkVersion.
-ENV ANDROID_COMPILE_SDK="28"
+ENV ANDROID_COMPILE_SDK="30"
 
 # ANDROID_BUILD_TOOLS is the version of the Android build tools you are using.
 # It should match buildToolsVersion.
-ENV ANDROID_BUILD_TOOLS="29.0.2"
+ENV ANDROID_BUILD_TOOLS="30.0.3"
 
 # It's what version of the command line tools we're going to download from the official site.
 # Official Site-> https://developer.android.com/studio/index.html
 # There, look down below at the cli tools only, sdk tools package is of format:
 #        commandlinetools-os_type-ANDROID_SDK_TOOLS_latest.zip
 # when the script was last modified for latest compileSdkVersion, it was which is written down below
-ENV ANDROID_SDK_TOOLS="7302050"
+ENV ANDROID_SDK_TOOLS="8512546"
 
 
 RUN apt --quiet update --yes
